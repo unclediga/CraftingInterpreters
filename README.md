@@ -1,2 +1,2 @@
-# craftinginterpreters
+# CraftingInterpreters
 Crafting Interpreters by Robert Nystorm 
