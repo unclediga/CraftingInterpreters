@@ -1,2 +1,2 @@
 @echo off 
-java -cp .\target com.craftinginterpreters.lox.Lox %*
+java -cp .\bin com.craftinginterpreters.lox.Lox %*
