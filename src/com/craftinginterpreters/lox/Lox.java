@@ -38,6 +38,7 @@ public class Lox {
 				break;
 			}
 			run(line);
+			hadError = false;
 		}
 		System.out.println("Goodbye!");
 	}
