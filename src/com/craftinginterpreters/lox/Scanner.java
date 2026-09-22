@@ -32,39 +32,76 @@ class Scanner {
 		char c = advance();
 		switch (c) {
 		case '{':
-			addToken(TokenType.LEFT_BRACE);
+			addToken(LEFT_BRACE);
 			break;
 		case '}':
-			addToken(TokenType.RIGHT_BRACE);
+			addToken(RIGHT_BRACE);
 			break;
 		case '(':
-			addToken(TokenType.LEFT_PAREN);
+			addToken(LEFT_PAREN);
 			break;
 		case ')':
-			addToken(TokenType.RIGHT_PAREN);
+			addToken(RIGHT_PAREN);
 			break;
 		case ',':
-			addToken(TokenType.COMMA);
+			addToken(COMMA);
 			break;
 		case '.':
-			addToken(TokenType.DOT);
+			addToken(DOT);
 			break;
 		case '-':
-			addToken(TokenType.MINUS);
+			addToken(MINUS);
 			break;
 		case '+':
-			addToken(TokenType.PLUS);
+			addToken(PLUS);
 			break;
 		case ';':
-			addToken(TokenType.SEMICOLON);
+			addToken(SEMICOLON);
 			break;
 		case '*':
-			addToken(TokenType.STAR);
+			addToken(STAR);
+			break;
+		case '!':
+			addToken(match('=') ? BANG_EQUAL : BANG);
+			break;
+		case '=':
+			addToken(match('=') ? EQUAL_EQUAL : EQUAL);
+			break;
+		case '>':
+			addToken(match('=') ? GREATER_EQUAL : GREATER);
+			break;
+		case '<':
+			addToken(match('=') ? LESS_EQUAL : LESS);
+			break;
+		case '/':
+			if (match('/')) {
+				while(!isAtEnd() && source.charAt(current) != '\n') {
+					advance();
+				}
+			}else 
+				addToken(SLASH);
+			break;
+		case ' ':
+		case '\t':
+		case '\r':
+			break;
+		case '\n':
+			line++;
 			break;
 		default:
+			Lox.error(line, "Unexpected character.");
 			break;
 		}
 		return null;
+	}
+
+	private boolean match(char next) {
+
+		char c = advance();
+		if (c == next)
+			return true;
+		current--;
+		return false;
 	}
 
 	private void addToken(TokenType token) {
