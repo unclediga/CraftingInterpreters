@@ -14,6 +14,10 @@ class Token {
 		this.line = line;
 	}
 
+	public Token(TokenType tokenType) {
+		this(tokenType, "", null, 0);
+	}
+
 	@Override
 	public String toString() {
 		return "Token [type=" + type + ", lexeme=" + lexeme + ", literal=" + literal + "]";
