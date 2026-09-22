@@ -1,6 +1,3 @@
-**
-//abc
-//def
-**
-/////
-**
+// this is a comment
+(( )){} // grouping stuff
+!*+-/=<> <= == // operators

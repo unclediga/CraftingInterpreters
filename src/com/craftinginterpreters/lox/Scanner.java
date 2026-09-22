@@ -74,11 +74,10 @@ class Scanner {
 			addToken(match('=') ? LESS_EQUAL : LESS);
 			break;
 		case '/':
-			if (match('/')) {
-				while(!isAtEnd() && source.charAt(current) != '\n') {
+			if (match('/'))
+				while (peek() != '\n' && !isAtEnd())
 					advance();
-				}
-			}else 
+			else
 				addToken(SLASH);
 			break;
 		case ' ':
@@ -93,6 +92,12 @@ class Scanner {
 			break;
 		}
 		return null;
+	}
+
+	private char peek() {
+		if (isAtEnd())
+			return '\0';
+		return source.charAt(current);
 	}
 
 	private boolean match(char next) {
