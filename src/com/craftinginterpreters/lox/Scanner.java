@@ -87,6 +87,29 @@ class Scanner {
 		case '\n':
 			line++;
 			break;
+		case '"':
+			while (peek() != '"' && !isAtEnd())
+				advance();
+         if(!isAtEnd()) {
+            advance();
+            addToken(STRING,source.substring(start + 1, current - 1));            
+         } else 
+            Lox.error(line, "Unclosed string");      
+			break;
+		case '0':
+		case '1':
+		case '2':
+		case '3':
+		case '4':
+		case '5':
+		case '6':
+		case '7':
+		case '8':
+		case '9':
+			while (Character.isDigit(peek()) && !isAtEnd())
+				advance();
+         addToken(NUMBER,Integer.valueOf(source.substring(start, current)));            
+			break;
 		default:
 			Lox.error(line, "Unexpected character.");
 			break;

@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"com.craftinginterpreters.lox","l":"Lox"},{"p":"com.craftinginterpreters.lox","l":"Scanner"},{"p":"com.craftinginterpreters.lox","l":"Token"},{"p":"com.craftinginterpreters.lox","l":"TokenType"}]

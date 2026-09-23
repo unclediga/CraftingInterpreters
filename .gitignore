@@ -28,3 +28,6 @@ replay_pid*
 .settings/
 .classpath
 .project
+#jGRASP
+*.gpj
+*.jgrasp_canvas_xml
