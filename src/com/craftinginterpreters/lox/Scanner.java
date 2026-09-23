@@ -18,7 +18,7 @@ class Scanner {
 	public List<Token> scanTokens() {
 		while (!isAtEnd()) {
 			start = current;
-			Token token = scanToken();
+			scanToken();
 		}
 		addToken(EOF);
 		return tokens;
@@ -87,34 +87,30 @@ class Scanner {
 		case '\n':
 			line++;
 			break;
-		case '"':
-			while (peek() != '"' && !isAtEnd())
-				advance();
-         if(!isAtEnd()) {
-            advance();
-            addToken(STRING,source.substring(start + 1, current - 1));            
-         } else 
-            Lox.error(line, "Unclosed string");      
-			break;
-		case '0':
-		case '1':
-		case '2':
-		case '3':
-		case '4':
-		case '5':
-		case '6':
-		case '7':
-		case '8':
-		case '9':
-			while (Character.isDigit(peek()) && !isAtEnd())
-				advance();
-         addToken(NUMBER,Integer.valueOf(source.substring(start, current)));            
+		case '"': 
+			string();
 			break;
 		default:
-			Lox.error(line, "Unexpected character.");
-			break;
+			if (c >= '0' || c <= '9') number(); 
+			else Lox.error(line, "Unexpected character.");
 		}
 		return null;
+	}
+
+	private void number() {
+		while (Character.isDigit(peek()) && !isAtEnd())
+    	advance();
+        addToken(NUMBER,Integer.valueOf(source.substring(start, current)));            
+	}
+
+	private void string() {
+		while (peek() != '"' && !isAtEnd())
+			advance();
+        if(!isAtEnd()) {
+            advance();
+            addToken(STRING,source.substring(start + 1, current - 1));            
+        } else 
+            Lox.error(line, "Unclosed string");      
 	}
 
 	private char peek() {
