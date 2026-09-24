@@ -129,10 +129,10 @@ class Scanner {
 		while(!isAtEnd() && isAlphaDigit(peek()))
 			advance();
 		TokenType tokenType = keywords.get(source.substring(start, current));
-		if(tokenType == null)
-			Lox.error(line, "Undefined identifier");
-		else
+		if(tokenType != null)
 			addToken(tokenType);
+		else
+			addToken(IDENTIFIER);
 	}
 
 	private void number() {
