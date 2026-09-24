@@ -87,30 +87,49 @@ class Scanner {
 		case '\n':
 			line++;
 			break;
-		case '"': 
+		case '"':
 			string();
 			break;
 		default:
-			if (c >= '0' || c <= '9') number(); 
-			else Lox.error(line, "Unexpected character.");
+			if (isDigit(c))
+				number();
+			else
+				Lox.error(line, "Unexpected character.");
 		}
 		return null;
 	}
 
 	private void number() {
-		while (Character.isDigit(peek()) && !isAtEnd())
-    	advance();
-        addToken(NUMBER,Integer.valueOf(source.substring(start, current)));            
+		advance();
+		while (!isAtEnd()) {
+			if (peek() == '.' && isDigit(peeknext()))
+				advance();
+			else if (isDigit(peek())) {
+				advance();
+			} else
+				break;
+		}
+		addToken(NUMBER, Double.parseDouble(source.substring(start, current)));
+	}
+
+	private char peeknext() {
+		if (source.length() <= current)
+			return '\0';
+		return source.charAt(current + 1);
+	}
+
+	private boolean isDigit(char c) {
+		return c >= '0' && c <= '9';
 	}
 
 	private void string() {
 		while (peek() != '"' && !isAtEnd())
 			advance();
-        if(!isAtEnd()) {
-            advance();
-            addToken(STRING,source.substring(start + 1, current - 1));            
-        } else 
-            Lox.error(line, "Unclosed string");      
+		if (!isAtEnd()) {
+			advance();
+			addToken(STRING, source.substring(start + 1, current - 1));
+		} else
+			Lox.error(line, "Unclosed string");
 	}
 
 	private char peek() {
