@@ -32,3 +32,5 @@ replay_pid*
 *.gpj
 *.jgrasp_canvas_xml
 test*.lox
+#Lua Studio RT
+CraftingInterpreters.src*
